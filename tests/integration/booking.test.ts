@@ -40,5 +40,23 @@ describe('GET /booking', () => {
             const response = await server.get('/booking').set('Authorization', `Bearer ${token}`);
             expect(response.status).toEqual(httpStatus.NOT_FOUND);
         });
+
+        it('Deve retornar OK', async () => {
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const response = await server.get('/booking').set('Authorization', `Bearer ${token}`);
+            expect(response.status).toBe(httpStatus.OK);
+            expect(response.body).toMatchObject({
+              id: expect.any(Number),
+              Room: {
+                id: expect.any(Number),
+                name: expect.any(String),
+                capacity: expect.any(Number),
+                hotelId: expect.any(Number),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+              },
+            });
+        });
     });
   });

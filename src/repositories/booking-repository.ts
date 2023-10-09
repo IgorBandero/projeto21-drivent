@@ -2,9 +2,9 @@ import { prisma } from '@/config';
 
 async function findBookingByUserId(userId: number) {
 
-    return prisma.booking.findUnique({
+    return prisma.booking.findFirst({
         where: {
-            userId,
+            userId: userId
         },
         select: {
             id: true, 
